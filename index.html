@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AniHive</title>
+
+  <link rel="stylesheet" href="style.css" />
+  
+
+</head>
+<body>
+  <!-- Accessible Menu Overlay (move outside header, just after <body>) -->
+  <div class="accessible-menu-overlay" id="accessible-menu-overlay" tabindex="-1">
+    <nav class="accessible-menu" id="accessible-menu" aria-label="Main menu">
+      <button class="accessible-menu-close" id="menu-close" aria-label="Close menu">&times;</button>
+      <div class="accessible-menu-section" id="menu-search-section"></div>
+      <div class="accessible-menu-section" id="menu-nav-section"></div>
+      <div class="accessible-menu-section" id="menu-popular-section"></div>
+    </nav>
+  </div>
+  <!-- End Accessible Menu Overlay -->
+
+  <div class="static-header-auth">
+    <button class="register-btn">Register</button>
+    <button class="login-btn">Log In</button>
+  </div>
+  <header>
+    <div class="header-left">
+      <div class="logo">
+        <h1><span>Ani</span>Hive</h1>
+      </div>
+    </div>
+    <div class="logo-search">
+      <select class="header-category-select">
+        <option value="all">All</option>
+        <option value="figures">Figures</option>
+        <option value="accessories">Accessories</option>
+        <option value="posters">Posters</option>
+        <option value="apparel">Apparel</option>
+      </select>
+      <input type="text" class="header-search-input" placeholder="Search products...">
+      <button class="search-button">Search</button>
+    </div>
+    <div class="header-icons">
+      <button class="accessible-menu-button" id="menu-btn" aria-label="Open menu" aria-controls="accessible-menu" aria-expanded="false">☰</button>
+      <button class="search-menu-button" id="search-menu-btn" aria-label="Open search" style="display:none;">🔍</button>
+      <a href="wishlist.html" title="Wishlist">❤️</a>
+      <div class="cart-wrapper" id="cart-wrapper" style="position:relative;display:inline-block;">
+        <button id="cartIconBtn" onclick="openCartModal()" style="background:none;border:none;outline:none;cursor:pointer;position:relative;display:flex;align-items:center;gap:0.5em;" aria-label="View cart" disabled>
+  <span style="font-size:1.5em;position:relative;display:inline-block;line-height:1;">
+    <!-- SVG Cart Icon Start -->
+    <svg class="cart-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 28 28">
+  <circle cx="10" cy="24" r="2" fill="#111"/>
+  <circle cx="20" cy="24" r="2" fill="#111"/>
+  <path d="M4 6h2.5l2.7 12.1A2 2 0 0 0 11.1 20h7.8a2 2 0 0 0 1.9-1.5L22.7 10H7" stroke="#111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>
+    <!-- SVG Cart Icon End -->
+    <span id="cart-badge" style="display:none;position:absolute;top:-7px;right:-8px;background:#ef4444;color:#fff;font-size:0.7em;font-weight:bold;padding:1px 5px;border-radius:999px;min-width:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08);z-index:2;">0</span>
+  </span>
+  <span id="cart-total" style="font-weight:bold;color:#000000;font-size:1.1em;">฿0</span>
+</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="top-nav">
+    <a href="#">Home</a>
+    <a href="products.html">Products</a>
+    <a href="#">Preorder</a>
+    <!-- Categories Dropdown Start -->
+    <div class="dropdown" id="categories-dropdown">
+      <button class="dropdown-btn" id="categoriesDropdownBtn" aria-haspopup="true" aria-expanded="false" tabindex="0">Categories</button>
+      <div class="dropdown-content" id="categoriesDropdownContent" role="menu" aria-label="Categories">
+        <div class="dropdown-col">
+          <div class="dropdown-main">Goods</div>
+          <div class="dropdown-sub" tabindex="0">Premium Bandai</div>
+          <div class="dropdown-sub" tabindex="0">BANDAI Candytoys</div>
+          <div class="dropdown-main">Blu-Ray/DVD</div>
+          <div class="dropdown-sub" tabindex="0">Blu-Ray</div>
+          <div class="dropdown-sub" tabindex="0">DVD</div>
+          <div class="dropdown-main">Special Product</div>
+          <div class="dropdown-main">Points Rewards</div>
+        </div>
+        <div class="dropdown-col">
+          <div class="dropdown-main">Figure</div>
+          <div class="dropdown-sub" tabindex="0">Banpresto</div>
+          <div class="dropdown-sub" tabindex="0">Nendoroid</div>
+          <div class="dropdown-sub" tabindex="0">Figma</div>
+          <div class="dropdown-sub" tabindex="0">Scale</div>
+          <div class="dropdown-sub" tabindex="0">Others</div>
+          <div class="dropdown-main">CD</div>
+          <div class="dropdown-sub" tabindex="0">Seiyuu/Artist</div>
+          <div class="dropdown-sub" tabindex="0">Character Song</div>
+          <div class="dropdown-sub" tabindex="0">Theme Song</div>
+          <div class="dropdown-sub" tabindex="0">Drama CD</div>
+          <div class="dropdown-sub" tabindex="0">Soundtrack</div>
+          <div class="dropdown-main">With Bonus</div>
+          <div class="dropdown-main">Kuji</div>
+        </div>
+        <div class="dropdown-col">
+          <div class="dropdown-main">Book/Comic</div>
+          <div class="dropdown-sub" tabindex="0">Japanese Magazine</div>
+          <div class="dropdown-sub" tabindex="0">Japanese Book</div>
+          <div class="dropdown-sub" tabindex="0">Japanese Comic</div>
+          <div class="dropdown-sub" tabindex="0">Thai Illustration Book</div>
+          <div class="dropdown-sub" tabindex="0">Thai Comic</div>
+          <div class="dropdown-main">Gachapon</div>
+          <div class="dropdown-main">Trading Card</div>
+        </div>
+      </div>
+    </div>
+    <!-- Categories Dropdown End -->
+    <!-- Search By Title Dropdown Start -->
+    <div class="dropdown" id="titles-dropdown">
+      <button class="dropdown-btn" id="titlesDropdownBtn" aria-haspopup="true" aria-expanded="false" tabindex="0">Search By Title</button>
+      <div class="dropdown-content" id="titlesDropdownContent" role="menu" aria-label="Titles" style="min-width:260px;max-height:400px;overflow-y:auto;">
+        <div class="dropdown-col">
+          <a class="dropdown-main" href="products.html?title=Ado">Ado</a>
+          <a class="dropdown-main" href="products.html?title=ALIEN%20STAGE">ALIEN STAGE</a>
+          <a class="dropdown-main" href="products.html?title=Animate_IMA">Animate_IMA</a>
+          <a class="dropdown-main" href="products.html?title=Attack%20On%20Titan">Attack On Titan</a>
+          <a class="dropdown-main" href="products.html?title=BL">BL</a>
+          <a class="dropdown-main" href="products.html?title=Blue%20Archive">Blue Archive</a>
+          <a class="dropdown-main" href="products.html?title=Blue%20Lock">Blue Lock</a>
+          <a class="dropdown-main" href="products.html?title=Bungo%20Stray%20Dogs">Bungo Stray Dogs</a>
+          <a class="dropdown-main" href="products.html?title=Genshin%20Impact">Genshin Impact</a>
+          <a class="dropdown-main" href="products.html?title=Given">Given</a>
+          <a class="dropdown-main" href="products.html?title=Haikyu!!">Haikyu!!</a>
+          <a class="dropdown-main" href="products.html?title=Hololive%20Production">Hololive Production</a>
+          <a class="dropdown-main" href="products.html?title=Honkai%20Star%20Rail">Honkai Star Rail</a>
+          <a class="dropdown-main" href="products.html?title=Hoshimachi%20Suisei">Hoshimachi Suisei</a>
+          <a class="dropdown-main" href="products.html?title=Jujutsu%20Kaisen">Jujutsu Kaisen</a>
+          <a class="dropdown-main" href="products.html?title=Kimetsu%20No%20Yaiba">Kimetsu No Yaiba</a>
+          <a class="dropdown-main" href="products.html?title=My%20Hero%20Academia">My Hero Academia</a>
+          <a class="dropdown-main" href="products.html?title=NON%20CHARACTER">NON CHARACTER</a>
+          <a class="dropdown-main" href="products.html?title=Project%20Sekai%3A%20Colorful%20Stage%20Feat.%20Hatsune%20Miku">Project Sekai: Colorful Stage Feat. Hatsune Miku</a>
+          <a class="dropdown-main" href="products.html?title=SAKAMOTO%20DAYS">SAKAMOTO DAYS</a>
+          <a class="dropdown-main" href="products.html?title=Sword%20Art%20Online">Sword Art Online</a>
+          <a class="dropdown-main" href="products.html?title=Tian%20Guan%20Ci%20Fu">Tian Guan Ci Fu</a>
+          <a class="dropdown-main" href="products.html?title=Violet%20Evergarden">Violet Evergarden</a>
+          <a class="dropdown-main" href="products.html?title=Vtuber">Vtuber</a>
+          <a class="dropdown-main" href="products.html?title=Vocaloid">Vocaloid</a>
+          <a class="dropdown-main" href="products.html?title=YOASOBI">YOASOBI</a>
+          <a class="dropdown-main" href="products.html?title=Zenless%20Zone%20Zero">Zenless Zone Zero</a>
+        </div>
+      </div>
+    </div>
+    <!-- Search By Title Dropdown End -->
+    <a href="#">My Account</a>
+  </nav>
+
+  <div class="container">
+    <aside>
+      <button class="collapsible-title" aria-expanded="true" id="popular-toggle">
+        Popular Titles
+        <span class="collapsible-arrow" id="popular-arrow">&#9660;</span>
+      </button>
+      <div class="collapsible-content open" id="popular-content">
+        <ul id="popular-list">
+          <li data-title="Jujutsu Kaisen"><img src="https://cdn.myanimelist.net/images/anime/1804/126216.jpg"><span>Jujutsu Kaisen</span></li>
+          <li data-title="Blue Lock"><img src="https://cdn.myanimelist.net/images/anime/1015/127974.jpg"><span>Blue Lock</span></li>
+          <li data-title="Haikyu!!"><img src="https://cdn.myanimelist.net/images/anime/7/76014.jpg"><span>Haikyu!!</span></li>
+          <li data-title="Wind Breaker"><img src="https://cdn.myanimelist.net/images/anime/1972/139503.jpg"><span>Wind Breaker</span></li>
+          <li data-title="My Hero Academia"><img src="https://cdn.myanimelist.net/images/anime/10/78745.jpg"><span>My Hero Academia</span></li>
+          <li data-title="Bungo Stray Dogs"><img src="https://cdn.myanimelist.net/images/anime/3/75178.jpg"><span>Bungo Stray Dogs</span></li>
+          <li data-title="Kimetsu no Yaiba"><img src="https://cdn.myanimelist.net/images/anime/1286/99889.jpg"><span>Kimetsu no Yaiba</span></li>
+          <li data-title="Tian Guan Ci Fu"><img src="https://cdn.myanimelist.net/images/anime/1813/109223.jpg"><span>Tian Guan Ci Fu</span></li>
+          <li data-title="Honkai Star Rail"><img src="https://cdn.myanimelist.net/images/anime/1988/139504.jpg"><span>Honkai Star Rail</span></li>
+          <li data-title="Genshin Impact"><img src="https://cdn.myanimelist.net/images/anime/1987/139505.jpg"><span>Genshin Impact</span></li>
+        </ul>
+      </div>
+      <div class="related-products" id="related-products"></div>
+    </aside>
+
+    <main>
+      <!-- Sliding Promo Banner Start -->
+      <div class="main-carousel" id="main-carousel">
+        <div class="carousel-track">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Banner 1" class="carousel-item active">
+          <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80" alt="Banner 2" class="carousel-item">
+          <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80" alt="Banner 3" class="carousel-item">
+          <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80" alt="Banner 4" class="carousel-item">
+          <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=800&q=80" alt="Banner 5" class="carousel-item">
+        </div>
+        <div class="carousel-dots" id="carousel-dots"></div>
+      </div>
+      <!-- Sliding Promo Banner End -->
+
+      <!-- Additional Sliding Banners Side by Side -->
+      <div class="side-by-side-banners">
+        <div class="main-carousel small-carousel" id="main-carousel-2">
+          <div class="carousel-track" id="carousel-track-2">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Banner 1" class="carousel-item">
+            <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80" alt="Banner 2" class="carousel-item">
+            <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80" alt="Banner 3" class="carousel-item">
+          </div>
+          <div class="carousel-dots" id="carousel-dots-2"></div>
+        </div>
+        <div class="main-carousel small-carousel" id="main-carousel-3">
+          <div class="carousel-track" id="carousel-track-3">
+            <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80" alt="Banner 4" class="carousel-item">
+            <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=800&q=80" alt="Banner 5" class="carousel-item">
+            <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80" alt="Banner 6" class="carousel-item">
+          </div>
+          <div class="carousel-dots" id="carousel-dots-3"></div>
+        </div>
+      </div>
+      <!-- End Additional Sliding Banners -->
+
+      <h2 class="popular-products-header">Popular Items</h2>
+      <div class="honeycomb-grid">
+        <!-- Honeycomb will be generated here -->
+      </div>
+    </main>
+  </div>
+  <div class="modal-overlay" id="product-modal">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+      <img class="modal-img" id="modal-img" src="" alt="Product image" />
+      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-desc" id="modal-desc"></div>
+      <div class="modal-price" id="modal-price"></div>
+      <div class="modal-actions">
+        <button class="wishlist-btn" id="modal-wishlist" title="Add to wishlist">❤️</button>
+        <button class="cart-btn" id="modal-cart" title="Add to cart">🛒</button>
+      </div>
+    </div>
+  </div>
+  <!-- Cart Modal Overlay (for cart pop-up) -->
+<div id="cartModal" class="modal-overlay">
+  <div class="modal-content" style="max-width:900px;width:90vw;">
+    <button class="modal-close" onclick="closeCartModal()">&times;</button>
+    <div id="cartModalContent">
+      <!-- Cart content will be injected here by JS -->
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+// Scroll to top button logic (no flicker)
+const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+const menuBar = document.querySelector('.top-nav');
+let menuBarBottom = 0;
+function updateMenuBarBottom() {
+  const rect = menuBar.getBoundingClientRect();
+  menuBarBottom = rect.top + window.scrollY + rect.height;
+}
+window.addEventListener('DOMContentLoaded', updateMenuBarBottom);
+window.addEventListener('resize', updateMenuBarBottom);
+let isBtnVisible = false;
+window.addEventListener('scroll', function() {
+  if(window.scrollY > menuBarBottom) {
+    if (!isBtnVisible) {
+      scrollToTopBtn.style.pointerEvents = 'auto';
+      scrollToTopBtn.style.opacity = '1';
+      isBtnVisible = true;
+    }
+  } else {
+    if (isBtnVisible) {
+      scrollToTopBtn.style.opacity = '0';
+      scrollToTopBtn.style.pointerEvents = 'none';
+      isBtnVisible = false;
+    }
+  }
+});
+scrollToTopBtn.addEventListener('click', function() {
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+// Cart Modal logic
+function openCartModal() {
+  document.getElementById('cartModal').classList.add('active');
+  renderCartModal();
+}
+function closeCartModal() {
+  document.getElementById('cartModal').classList.remove('active');
+}
+
+// Example: Simulate login state and cart items (replace with backend later)
+let isLoggedIn = false; // Set to true if user is logged in (replace with backend check later)
+let cartItems = [
+  {
+    title: "hololive production - Nendoroid Ninomae Ina’nis (Re-run)",
+    img: "https://dummyimage.com/80x80/eee/333&text=Ina",
+    price: 1929,
+    oldPrice: 2030,
+    qty: 1,
+    release: "31-12-2025"
+  }
+];
+
+function renderCartModal() {
+  const content = document.getElementById('cartModalContent');
+  if (!isLoggedIn) {
+    content.innerHTML = `
+      <h2>Cart</h2>
+      <div style="background:#f3f4f6;padding:1em;border-radius:8px;margin-bottom:1em;">
+        You are not logged in. Please log in before placing an order.<br>
+        <a href="/Account/Register" style="font-weight:bold;">Register</a> or <a href="/Account/Login" style="font-weight:bold;">Login</a>
+      </div>
+      <button onclick="window.location='/Account/Login'" style="width:100%;background:#3b82f6;color:#fff;padding:0.7em 0;border-radius:8px;font-size:1.1em;">Log in</button>
+    `;
+  } else {
+    let itemsHtml = cartItems.map(item => `
+      <div style="display:flex;align-items:center;gap:1em;margin-bottom:1em;">
+        <img src="${item.img}" alt="" style="width:60px;height:60px;border-radius:8px;">
+        <div style="flex:1;">
+          <div style="font-weight:bold;">${item.title}</div>
+          <div style="font-size:0.95em;color:#888;">JP Release Date ${item.release}</div>
+        </div>
+        <div>
+          <span style="text-decoration:line-through;color:#aaa;">฿${item.oldPrice}</span><br>
+          <span style="font-weight:bold;color:#b45309;">฿${item.price}</span>
+        </div>
+        <div>
+          <button style="padding:0.2em 0.7em;">-</button>
+          <span>${item.qty}</span>
+          <button style="padding:0.2em 0.7em;">+</button>
+        </div>
+        <div style="font-weight:bold;">฿${item.price * item.qty}</div>
+        <button style="background:none;border:none;color:#3b82f6;font-size:1.3em;">🗑️</button>
+      </div>
+    `).join('');
+    content.innerHTML = `
+      <h2>Cart</h2>
+      <div style="margin-bottom:1em;">
+        <strong>Products Pre-Order</strong>
+      </div>
+      ${itemsHtml}
+      <div style="margin:1em 0;background:#fef9c3;padding:0.7em 1em;border-radius:8px;">
+        The items in the cart will be automatically removed after 3 days.
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:bold;">Total (${cartItems.length} item)</span>
+        <span style="font-size:1.2em;font-weight:bold;color:#2563eb;">฿${cartItems.reduce((sum, i) => sum + i.price * i.qty, 0)}</span>
+        <button style="background:#2563eb;color:#fff;padding:0.7em 2em;border-radius:8px;font-size:1.1em;">Checkout</button>
+      </div>
+    `;
+  }
+}
+
+// Cart Icon update logic
+function updateCartIcon() {
+  const btn = document.getElementById('cartIconBtn');
+  const badge = document.getElementById('cart-badge');
+  const total = document.getElementById('cart-total');
+  const itemCount = cartItems.reduce((sum, i) => sum + i.qty, 0);
+  const money = cartItems.reduce((sum, i) => sum + i.price * i.qty, 0);
+  if (itemCount > 0) {
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.style.pointerEvents = 'auto';
+    badge.style.display = 'inline-block';
+    badge.textContent = itemCount;
+    total.textContent = `฿${money}`;
+  } else {
+    btn.disabled = true;
+    btn.style.opacity = '0.5';
+    btn.style.pointerEvents = 'none';
+    badge.style.display = 'none';
+    total.textContent = '฿0';
+  }
+}
+
+// Call updateCartIcon on page load and after cart changes
+window.addEventListener('DOMContentLoaded', () => {
+  updateMenuBarBottom();
+  updateCartIcon();
+});
+window.addEventListener('resize', updateMenuBarBottom);
+// If you have cart add/remove logic elsewhere, call updateCartIcon() after those changes.
+
+document.getElementById('cartModal').addEventListener('click', function(e) {
+  if (e.target === this) closeCartModal();
+});
+</script>
+<button id="scrollToTopBtn" aria-label="Scroll to top" style="opacity:0;pointer-events:none;position:fixed;bottom:32px;right:32px;z-index:2000;background:rgba(255,223,120,0.55);box-shadow:0 8px 32px 0 rgba(230,167,62,0.18);backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);border:none;border-radius:50%;width:48px;height:48px;font-size:2em;color:#e67e22;cursor:pointer;transition:opacity 0.2s;display:block;align-items:center;justify-content:center;display:flex;">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+</body>
+</html>
