@@ -1,0 +1,165 @@
+Table site_user {
+  id int [pk, increment]
+  email varchar
+  password varchar
+  full_name varchar
+  created_at datetime
+}
+
+Table user_address {
+  id int [pk, increment]
+  user_id int
+  address_id int
+  is_default boolean
+}
+
+Table address {
+  id int [pk, increment]
+  street varchar
+  city varchar
+  postcode varchar
+  country_id int
+}
+
+Table country {
+  id int [pk, increment]
+  name varchar
+}
+
+Table user_payment_method {
+  id int [pk, increment]
+  user_id int
+  payment_type_id int
+  provider varchar
+  account_number varchar
+  expiry_date date
+}
+
+Table payment_type {
+  id int [pk, increment]
+  name varchar
+}
+
+Table product_category {
+  id int [pk, increment]
+  name varchar
+}
+
+Table product {
+  id int [pk, increment]
+  name varchar
+  description text
+  category_id int
+}
+
+Table variation {
+  id int [pk, increment]
+  name varchar
+}
+
+Table variation_option {
+  id int [pk, increment]
+  variation_id int
+  value varchar
+}
+
+Table product_configuration {
+  id int [pk, increment]
+  product_id int
+  variation_option_id int
+}
+
+Table product_item {
+  id int [pk, increment]
+  product_id int
+  sku varchar
+  price decimal
+  quantity int
+  active boolean
+}
+
+Table promotion {
+  id int [pk, increment]
+  name varchar
+  description text
+  discount decimal
+  start_date date
+  end_date date
+}
+
+Table promotion_category {
+  id int [pk, increment]
+  promotion_id int
+  category_id int
+}
+
+Table shopping_cart_item {
+  id int [pk, increment]
+  user_id int
+  product_item_id int
+  quantity int
+}
+
+Table shop_order {
+  id int [pk, increment]
+  user_id int
+  address_id int
+  status_id int
+  shipping_method_id int
+  created_at datetime
+  updated_at datetime
+}
+
+Table order_line {
+  id int [pk, increment]
+  order_id int
+  product_item_id int
+  quantity int
+  price decimal
+}
+
+Table order_status {
+  id int [pk, increment]
+  name varchar
+}
+
+Table shipping_method {
+  id int [pk, increment]
+  name varchar
+  price decimal
+}
+
+Table user_review {
+  id int [pk, increment]
+  user_id int
+  product_id int
+  rating int
+  comment text
+  created_at datetime
+}
+
+Ref: user_address.user_id > site_user.id
+Ref: user_address.address_id > address.id
+Ref: address.country_id > country.id
+Ref: user_payment_method.user_id > site_user.id
+Ref: user_payment_method.payment_type_id > payment_type.id
+Ref: product.category_id > product_category.id
+Ref: variation_option.variation_id > variation.id
+Ref: product_configuration.product_id > product.id
+Ref: product_configuration.variation_option_id > variation_option.id
+Ref: product_item.product_id > product.id
+Ref: promotion_category.promotion_id > promotion.id
+Ref: promotion_category.category_id > product_category.id
+Ref: shopping_cart_item.user_id > site_user.id
+Ref: shopping_cart_item.product_item_id > product_item.id
+Ref: shop_order.user_id > site_user.id
+Ref: shop_order.address_id > address.id
+Ref: shop_order.status_id > order_status.id
+Ref: shop_order.shipping_method_id > shipping_method.id
+Ref: order_line.order_id > shop_order.id
+Ref: order_line.product_item_id > product_item.id
+Ref: user_review.user_id > site_user.id
+Ref: user_review.product_id > product.id
+
+
+Ref: "product_item"."sku" < "product_item"."id"
