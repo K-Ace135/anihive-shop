@@ -1,149 +1,859 @@
-Table site_user {
-  id int [pk, increment]
-  email varchar
-  password varchar
-  full_name varchar
-  created_at datetime
-}
-
-Table user_address {
-  id int [pk, increment]
-  user_id int [ref: > site_user.id]
-  address_id int [ref: > address.id]
-  is_default boolean
-}
-
-Table address {
-  id int [pk, increment]
-  street varchar
-  city varchar
-  postcode varchar
-  country_id int [ref: > country.id]
-}
-
-Table country {
-  id int [pk, increment]
-  name varchar
-}
-
-Table user_payment_method {
-  id int [pk, increment]
-  user_id int [ref: > site_user.id]
-  payment_type_id int [ref: > payment_type.id]
-  provider varchar
-  account_number varchar
-  expiry_date date
-}
-
-Table payment_type {
-  id int [pk, increment]
-  name varchar
-}
-
-Table product_type {
-  id int [pk, increment]
-  name varchar
-}
-
-Table product {
-  id int [pk, increment]
-  name varchar
-  description text
-  category_id int [ref: > product_type.id]
-}
-
-Table variation {
-  id int [pk, increment]
-  name varchar
-}
-
-Table variation_option {
-  id int [pk, increment]
-  variation_id int [ref: > variation.id]
-  value varchar
-}
-
-Table product_configuration {
-  id int [pk, increment]
-  product_id int [ref: > product.id]
-  variation_option_id int [ref: > variation_option.id]
-}
-
-Table product_item {
-  id int [pk, increment]
-  product_id int [ref: > product.id]
-  sku varchar
-  price decimal
-  quantity int
-  active boolean
-}
-
-Table fandom {
-  id int [pk, increment]
-  name varchar
-}
-
-Table product_fandom {
-  product_id int [ref: > product.id]
-  fandom_id int [ref: > fandom.id]
-}
-
-Table promotion {
-  id int [pk, increment]
-  name varchar
-  description text
-  discount decimal
-  start_date date
-  end_date date
-}
-
-Table promotion_category {
-  id int [pk, increment]
-  promotion_id int [ref: > promotion.id]
-  category_id int [ref: > product_type.id]
-}
-
-Table shopping_cart_item {
-  id int [pk, increment]
-  user_id int [ref: > site_user.id]
-  product_item_id int [ref: > product_item.id]
-  quantity int
-}
-
-Table shop_order {
-  id int [pk, increment]
-  user_id int [ref: > site_user.id]
-  address_id int [ref: > address.id]
-  status_id int [ref: > order_status.id]
-  shipping_method_id int [ref: > shipping_method.id]
-  created_at datetime
-  updated_at datetime
-}
-
-Table order_line {
-  id int [pk, increment]
-  order_id int [ref: > shop_order.id]
-  product_item_id int [ref: > product_item.id]
-  quantity int
-  price decimal
-}
-
-Table order_status {
-  id int [pk, increment]
-  name varchar
-}
-
-Table shipping_method {
-  id int [pk, increment]
-  name varchar
-  price decimal
-}
-
-Table user_review {
-  id int [pk, increment]
-  user_id int [ref: > site_user.id]
-  product_id int [ref: > product.id]
-  rating int
-  comment text
-  created_at datetime
-}
+USE [AniHive]
+GO
+/****** Object:  Table [dbo].[address]    Script Date: 6/28/2025 7:11:22 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[address](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[street] [nvarchar](255) NULL,
+	[city] [nvarchar](255) NULL,
+	[postcode] [nvarchar](50) NULL,
+	[country_id] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[country]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[country](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [nvarchar](255) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[fandom]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[fandom](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [nvarchar](255) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[order_line]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[order_line](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[order_id] [int] NOT NULL,
+	[product_item_id] [int] NOT NULL,
+	[quantity] [int] NOT NULL,
+	[price] [decimal](18, 2) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[order_status]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[order_status](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [nvarchar](255) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[payment_type]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[payment_type](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [nvarchar](255) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[product]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[product](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [nvarchar](255) NOT NULL,
+	[description] [nvarchar](max) NULL,
+	[category_id] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[product_configuration]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[product_configuration](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[product_id] [int] NOT NULL,
+	[variation_option_id] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[product_fandom]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[product_fandom](
+	[product_id] [int] NOT NULL,
+	[fandom_id] [int] NOT NULL,
+ CONSTRAINT [PK_product_fandom] PRIMARY KEY CLUSTERED 
+(
+	[product_id] ASC,
+	[fandom_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[product_image]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[product_image](
+	[image_id] [int] IDENTITY(1,1) NOT NULL,
+	[product_id] [int] NOT NULL,
+	[image_url] [nvarchar](255) NOT NULL,
+	[is_primary] [bit] NULL,
+	[uploaded_at] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[image_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[product_item]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[product_item](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[product_id] [int] NOT NULL,
+	[sku] [nvarchar](255) NULL,
+	[price] [decimal](18, 2) NULL,
+	[quantity] [int] NULL,
+	[active] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[product_type]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[product_type](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [nvarchar](255) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[promotion]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[promotion](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [nvarchar](255) NOT NULL,
+	[description] [nvarchar](max) NULL,
+	[discount] [decimal](5, 2) NULL,
+	[start_date] [date] NULL,
+	[end_date] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[promotion_category]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[promotion_category](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[promotion_id] [int] NOT NULL,
+	[category_id] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[shipping_method]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[shipping_method](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [nvarchar](255) NOT NULL,
+	[price] [decimal](18, 2) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[shop_order]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[shop_order](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[user_id] [int] NOT NULL,
+	[address_id] [int] NOT NULL,
+	[status_id] [int] NOT NULL,
+	[shipping_method_id] [int] NOT NULL,
+	[created_at] [datetime] NULL,
+	[updated_at] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[shopping_cart_item]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[shopping_cart_item](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[user_id] [int] NOT NULL,
+	[product_item_id] [int] NOT NULL,
+	[quantity] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[site_user]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[site_user](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[email] [nvarchar](255) NOT NULL,
+	[password] [nvarchar](255) NOT NULL,
+	[full_name] [nvarchar](255) NOT NULL,
+	[created_at] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[user_address]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[user_address](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[user_id] [int] NOT NULL,
+	[address_id] [int] NOT NULL,
+	[is_default] [bit] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[user_payment_method]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[user_payment_method](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[user_id] [int] NOT NULL,
+	[payment_type_id] [int] NOT NULL,
+	[provider] [nvarchar](255) NULL,
+	[account_number] [nvarchar](255) NULL,
+	[expiry_date] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[user_review]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[user_review](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[user_id] [int] NOT NULL,
+	[product_id] [int] NOT NULL,
+	[rating] [int] NOT NULL,
+	[comment] [nvarchar](max) NULL,
+	[created_at] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[variation]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[variation](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [nvarchar](255) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[variation_option]    Script Date: 6/28/2025 7:11:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[variation_option](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[variation_id] [int] NOT NULL,
+	[value] [nvarchar](255) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[country] ON 
+GO
+INSERT [dbo].[country] ([id], [name]) VALUES (1, N'Thailand')
+GO
+INSERT [dbo].[country] ([id], [name]) VALUES (2, N'Vietnam')
+GO
+INSERT [dbo].[country] ([id], [name]) VALUES (3, N'Malaysia')
+GO
+INSERT [dbo].[country] ([id], [name]) VALUES (4, N'Singapore')
+GO
+INSERT [dbo].[country] ([id], [name]) VALUES (5, N'Indonesia')
+GO
+INSERT [dbo].[country] ([id], [name]) VALUES (6, N'Philippines')
+GO
+INSERT [dbo].[country] ([id], [name]) VALUES (7, N'Japan')
+GO
+INSERT [dbo].[country] ([id], [name]) VALUES (8, N'South Korea')
+GO
+INSERT [dbo].[country] ([id], [name]) VALUES (9, N'United States')
+GO
+SET IDENTITY_INSERT [dbo].[country] OFF
+GO
+SET IDENTITY_INSERT [dbo].[fandom] ON 
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (1, N'Attack On Titan')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (2, N'Blue Archive')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (3, N'Blue Lock')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (4, N'Bungo Stray Dogs')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (5, N'Chainsaw Man')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (6, N'Dandadan')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (7, N'Dead Dead Demon’s Dededede Destruction')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (8, N'Delicious in Dungeon')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (9, N'Dr. Stone: Science Future')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (10, N'Erased')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (11, N'Fire Force')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (12, N'Frieren: Beyond Journey’s End')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (13, N'Haikyu!!')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (14, N'Honkai Star Rail')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (15, N'Jujutsu Kaisen')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (16, N'Kaiju No. 8')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (17, N'Kimetsu No Yaiba')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (18, N'Kuroshitsuji: Midori no Majo-hen')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (19, N'Lycoris Recoil')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (20, N'Medalist')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (21, N'Mob Psycho 100')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (22, N'My Hero Academia')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (23, N'Oshi no Ko')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (24, N'Re:Zero')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (25, N'SAKAMOTO DAYS')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (26, N'Solo Leveling')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (27, N'Spy × Family')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (28, N'Sword Art Online')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (29, N'That Time I Got Reincarnated as a Slime')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (30, N'The Angel Next Door Spoils Me Rotten')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (31, N'The Apothecary Diaries')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (32, N'The Dangers in My Heart')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (33, N'Tian Guan Ci Fu')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (34, N'Tokyo Revengers')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (35, N'Uma Musume: Cinderella Gray')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (36, N'Violet Evergarden')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (37, N'Witch Hat Atelier')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (38, N'Zenless Zone Zero')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (39, N'Ado')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (40, N'YOASOBI')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (41, N'Vocaloid')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (42, N'Project Sekai Colorful Stage Feat. Hatsune Miku')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (43, N'Animate_IMA')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (44, N'ALIEN STAGE')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (45, N'Hololive Production')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (46, N'Hoshimachi Suisei')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (47, N'Gawr Gura')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (48, N'Houshou Marine')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (49, N'Pekora (Usada Pekora)')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (50, N'Miko (Sakura Miko)')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (51, N'Ironmouse')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (52, N'Kizuna AI')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (53, N'Shoto')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (54, N'Kanae')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (55, N'Kuzuha')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (56, N'Filian')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (57, N'Nimu Spacecat')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (58, N'Zentreya')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (59, N'Shylily')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (60, N'ZilverK')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (61, N'Hiiragi Tsurugi')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (62, N'Shiranami Ramune')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (63, N'Hyakumantenbara Salome')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (64, N'Kson')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (65, N'Wind Breaker')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (66, N'Bocchi the Rock!')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (67, N'Mashle: Magic and Muscles')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (68, N'Hell’s Paradise')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (69, N'Akudama Drive')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (70, N'SK8 the Infinity')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (71, N'Call of the Night')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (72, N'Buddy Daddies')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (73, N'To Your Eternity')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (74, N'86 (Eighty-Six)')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (75, N'The Great Pretender')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (76, N'Jobless Reincarnation')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (77, N'Parasyte: The Grey')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (78, N'LiSA')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (79, N'Eve')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (80, N'Aimer')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (81, N'ZUTOMAYO')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (82, N'Hiroyuki Sawano')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (83, N'King Gnu')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (84, N'RADWIMPS')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (85, N'ReoNa')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (86, N'Yorushika')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (87, N'NIJISANJI EN')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (88, N'VShojo')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (89, N'BAUBAU')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (90, N'Kobo Kanaeru')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (91, N'Kaela Kovalskia')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (92, N'Iroha Kazama')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (93, N'Laplus Darknesss')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (94, N'Hakos Baelz')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (95, N'Ouro Kronii')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (96, N'IRyS')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (97, N'Tsukino Mito')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (98, N'Lui Takane')
+GO
+INSERT [dbo].[fandom] ([id], [name]) VALUES (99, N'Amane Kanata')
+GO
+SET IDENTITY_INSERT [dbo].[fandom] OFF
+GO
+SET IDENTITY_INSERT [dbo].[order_status] ON 
+GO
+INSERT [dbo].[order_status] ([id], [name]) VALUES (1, N'Pending')
+GO
+INSERT [dbo].[order_status] ([id], [name]) VALUES (2, N'Paid')
+GO
+INSERT [dbo].[order_status] ([id], [name]) VALUES (3, N'Processing')
+GO
+INSERT [dbo].[order_status] ([id], [name]) VALUES (4, N'Shipped')
+GO
+INSERT [dbo].[order_status] ([id], [name]) VALUES (5, N'Delivered')
+GO
+INSERT [dbo].[order_status] ([id], [name]) VALUES (6, N'Cancelled')
+GO
+INSERT [dbo].[order_status] ([id], [name]) VALUES (7, N'Refunded')
+GO
+SET IDENTITY_INSERT [dbo].[order_status] OFF
+GO
+SET IDENTITY_INSERT [dbo].[payment_type] ON 
+GO
+INSERT [dbo].[payment_type] ([id], [name]) VALUES (1, N'Credit Card')
+GO
+INSERT [dbo].[payment_type] ([id], [name]) VALUES (2, N'Bank Transfer')
+GO
+INSERT [dbo].[payment_type] ([id], [name]) VALUES (3, N'PromptPay')
+GO
+INSERT [dbo].[payment_type] ([id], [name]) VALUES (4, N'Paypal')
+GO
+SET IDENTITY_INSERT [dbo].[payment_type] OFF
+GO
+SET IDENTITY_INSERT [dbo].[product_type] ON 
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (1, N'Premium Bandai')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (2, N'BANDAI Candytoys')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (3, N'T-Shirts')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (4, N'Hoodies')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (5, N'Cosplay Costumes')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (6, N'Notebooks')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (7, N'Stickers')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (8, N'Posters')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (9, N'Wall Scrolls')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (10, N'Keychains')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (11, N'Plushies')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (12, N'Blu-Ray/DVD')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (13, N'Points Rewards')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (14, N'Banpresto')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (15, N'Nendoroid')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (16, N'Figma')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (17, N'Scale')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (18, N'Others (Figure)')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (19, N'Seiyuu/Artist CD')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (20, N'Character Song CD')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (21, N'Theme Song CD')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (22, N'Drama CD')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (23, N'Soundtrack')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (24, N'Japanese Magazine')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (25, N'Japanese Book')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (26, N'Japanese Comic')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (27, N'Thai Illustration Book')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (28, N'Thai Comic')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (29, N'Gachapon')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (30, N'Trading Card')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (31, N'With Bonus')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (32, N'Kuji')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (33, N'Live Concert Goods')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (34, N'Limited Edition Albums')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (35, N'Lightsticks')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (36, N'Fan Club Exclusives')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (37, N'Wallpapers')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (38, N'VTuber Assets')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (39, N'New Year Lucky Bags')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (40, N'Summer Festival Specials')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (41, N'Halloween & Christmas Editions')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (42, N'Seiyuu Interviews')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (43, N'Behind-the-Scenes')
+GO
+INSERT [dbo].[product_type] ([id], [name]) VALUES (44, N'Japanese Language Books')
+GO
+SET IDENTITY_INSERT [dbo].[product_type] OFF
+GO
+SET IDENTITY_INSERT [dbo].[shipping_method] ON 
+GO
+INSERT [dbo].[shipping_method] ([id], [name], [price]) VALUES (1, N'Standard Shipping (Thailand Post)', CAST(12.00 AS Decimal(18, 2)))
+GO
+INSERT [dbo].[shipping_method] ([id], [name], [price]) VALUES (2, N'EMS Express', CAST(15.00 AS Decimal(18, 2)))
+GO
+INSERT [dbo].[shipping_method] ([id], [name], [price]) VALUES (3, N'Flash Express', CAST(13.50 AS Decimal(18, 2)))
+GO
+INSERT [dbo].[shipping_method] ([id], [name], [price]) VALUES (4, N'DHL International', CAST(22.00 AS Decimal(18, 2)))
+GO
+INSERT [dbo].[shipping_method] ([id], [name], [price]) VALUES (5, N'Self Pickup', CAST(0.00 AS Decimal(18, 2)))
+GO
+SET IDENTITY_INSERT [dbo].[shipping_method] OFF
+GO
+ALTER TABLE [dbo].[product_image] ADD  DEFAULT ((0)) FOR [is_primary]
+GO
+ALTER TABLE [dbo].[product_image] ADD  DEFAULT (getdate()) FOR [uploaded_at]
+GO
+ALTER TABLE [dbo].[address]  WITH CHECK ADD  CONSTRAINT [FK_address_country] FOREIGN KEY([country_id])
+REFERENCES [dbo].[country] ([id])
+GO
+ALTER TABLE [dbo].[address] CHECK CONSTRAINT [FK_address_country]
+GO
+ALTER TABLE [dbo].[order_line]  WITH CHECK ADD  CONSTRAINT [FK_order_line_order] FOREIGN KEY([order_id])
+REFERENCES [dbo].[shop_order] ([id])
+GO
+ALTER TABLE [dbo].[order_line] CHECK CONSTRAINT [FK_order_line_order]
+GO
+ALTER TABLE [dbo].[order_line]  WITH CHECK ADD  CONSTRAINT [FK_order_line_product_item] FOREIGN KEY([product_item_id])
+REFERENCES [dbo].[product_item] ([id])
+GO
+ALTER TABLE [dbo].[order_line] CHECK CONSTRAINT [FK_order_line_product_item]
+GO
+ALTER TABLE [dbo].[product]  WITH CHECK ADD  CONSTRAINT [FK_product_product_type] FOREIGN KEY([category_id])
+REFERENCES [dbo].[product_type] ([id])
+GO
+ALTER TABLE [dbo].[product] CHECK CONSTRAINT [FK_product_product_type]
+GO
+ALTER TABLE [dbo].[product_configuration]  WITH CHECK ADD  CONSTRAINT [FK_product_configuration_product] FOREIGN KEY([product_id])
+REFERENCES [dbo].[product] ([id])
+GO
+ALTER TABLE [dbo].[product_configuration] CHECK CONSTRAINT [FK_product_configuration_product]
+GO
+ALTER TABLE [dbo].[product_configuration]  WITH CHECK ADD  CONSTRAINT [FK_product_configuration_variation_option] FOREIGN KEY([variation_option_id])
+REFERENCES [dbo].[variation_option] ([id])
+GO
+ALTER TABLE [dbo].[product_configuration] CHECK CONSTRAINT [FK_product_configuration_variation_option]
+GO
+ALTER TABLE [dbo].[product_fandom]  WITH CHECK ADD  CONSTRAINT [FK_product_fandom_fandom] FOREIGN KEY([fandom_id])
+REFERENCES [dbo].[fandom] ([id])
+GO
+ALTER TABLE [dbo].[product_fandom] CHECK CONSTRAINT [FK_product_fandom_fandom]
+GO
+ALTER TABLE [dbo].[product_fandom]  WITH CHECK ADD  CONSTRAINT [FK_product_fandom_product] FOREIGN KEY([product_id])
+REFERENCES [dbo].[product] ([id])
+GO
+ALTER TABLE [dbo].[product_fandom] CHECK CONSTRAINT [FK_product_fandom_product]
+GO
+ALTER TABLE [dbo].[product_image]  WITH CHECK ADD  CONSTRAINT [FK_ProductImage_Product] FOREIGN KEY([product_id])
+REFERENCES [dbo].[product] ([id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[product_image] CHECK CONSTRAINT [FK_ProductImage_Product]
+GO
+ALTER TABLE [dbo].[product_item]  WITH CHECK ADD  CONSTRAINT [FK_product_item_product] FOREIGN KEY([product_id])
+REFERENCES [dbo].[product] ([id])
+GO
+ALTER TABLE [dbo].[product_item] CHECK CONSTRAINT [FK_product_item_product]
+GO
+ALTER TABLE [dbo].[promotion_category]  WITH CHECK ADD  CONSTRAINT [FK_promotion_category_product_type] FOREIGN KEY([category_id])
+REFERENCES [dbo].[product_type] ([id])
+GO
+ALTER TABLE [dbo].[promotion_category] CHECK CONSTRAINT [FK_promotion_category_product_type]
+GO
+ALTER TABLE [dbo].[promotion_category]  WITH CHECK ADD  CONSTRAINT [FK_promotion_category_promotion] FOREIGN KEY([promotion_id])
+REFERENCES [dbo].[promotion] ([id])
+GO
+ALTER TABLE [dbo].[promotion_category] CHECK CONSTRAINT [FK_promotion_category_promotion]
+GO
+ALTER TABLE [dbo].[shop_order]  WITH CHECK ADD  CONSTRAINT [FK_shop_order_address] FOREIGN KEY([address_id])
+REFERENCES [dbo].[address] ([id])
+GO
+ALTER TABLE [dbo].[shop_order] CHECK CONSTRAINT [FK_shop_order_address]
+GO
+ALTER TABLE [dbo].[shop_order]  WITH CHECK ADD  CONSTRAINT [FK_shop_order_order_status] FOREIGN KEY([status_id])
+REFERENCES [dbo].[order_status] ([id])
+GO
+ALTER TABLE [dbo].[shop_order] CHECK CONSTRAINT [FK_shop_order_order_status]
+GO
+ALTER TABLE [dbo].[shop_order]  WITH CHECK ADD  CONSTRAINT [FK_shop_order_shipping_method] FOREIGN KEY([shipping_method_id])
+REFERENCES [dbo].[shipping_method] ([id])
+GO
+ALTER TABLE [dbo].[shop_order] CHECK CONSTRAINT [FK_shop_order_shipping_method]
+GO
+ALTER TABLE [dbo].[shop_order]  WITH CHECK ADD  CONSTRAINT [FK_shop_order_user] FOREIGN KEY([user_id])
+REFERENCES [dbo].[site_user] ([id])
+GO
+ALTER TABLE [dbo].[shop_order] CHECK CONSTRAINT [FK_shop_order_user]
+GO
+ALTER TABLE [dbo].[shopping_cart_item]  WITH CHECK ADD  CONSTRAINT [FK_shopping_cart_item_product_item] FOREIGN KEY([product_item_id])
+REFERENCES [dbo].[product_item] ([id])
+GO
+ALTER TABLE [dbo].[shopping_cart_item] CHECK CONSTRAINT [FK_shopping_cart_item_product_item]
+GO
+ALTER TABLE [dbo].[shopping_cart_item]  WITH CHECK ADD  CONSTRAINT [FK_shopping_cart_item_user] FOREIGN KEY([user_id])
+REFERENCES [dbo].[site_user] ([id])
+GO
+ALTER TABLE [dbo].[shopping_cart_item] CHECK CONSTRAINT [FK_shopping_cart_item_user]
+GO
+ALTER TABLE [dbo].[user_address]  WITH CHECK ADD  CONSTRAINT [FK_user_address_address] FOREIGN KEY([address_id])
+REFERENCES [dbo].[address] ([id])
+GO
+ALTER TABLE [dbo].[user_address] CHECK CONSTRAINT [FK_user_address_address]
+GO
+ALTER TABLE [dbo].[user_address]  WITH CHECK ADD  CONSTRAINT [FK_user_address_user] FOREIGN KEY([user_id])
+REFERENCES [dbo].[site_user] ([id])
+GO
+ALTER TABLE [dbo].[user_address] CHECK CONSTRAINT [FK_user_address_user]
+GO
+ALTER TABLE [dbo].[user_payment_method]  WITH CHECK ADD  CONSTRAINT [FK_user_payment_method_payment_type] FOREIGN KEY([payment_type_id])
+REFERENCES [dbo].[payment_type] ([id])
+GO
+ALTER TABLE [dbo].[user_payment_method] CHECK CONSTRAINT [FK_user_payment_method_payment_type]
+GO
+ALTER TABLE [dbo].[user_payment_method]  WITH CHECK ADD  CONSTRAINT [FK_user_payment_method_user] FOREIGN KEY([user_id])
+REFERENCES [dbo].[site_user] ([id])
+GO
+ALTER TABLE [dbo].[user_payment_method] CHECK CONSTRAINT [FK_user_payment_method_user]
+GO
+ALTER TABLE [dbo].[user_review]  WITH CHECK ADD  CONSTRAINT [FK_user_review_product] FOREIGN KEY([product_id])
+REFERENCES [dbo].[product] ([id])
+GO
+ALTER TABLE [dbo].[user_review] CHECK CONSTRAINT [FK_user_review_product]
+GO
+ALTER TABLE [dbo].[user_review]  WITH CHECK ADD  CONSTRAINT [FK_user_review_user] FOREIGN KEY([user_id])
+REFERENCES [dbo].[site_user] ([id])
+GO
+ALTER TABLE [dbo].[user_review] CHECK CONSTRAINT [FK_user_review_user]
+GO
+ALTER TABLE [dbo].[variation_option]  WITH CHECK ADD  CONSTRAINT [FK_variation_option_variation] FOREIGN KEY([variation_id])
+REFERENCES [dbo].[variation] ([id])
+GO
+ALTER TABLE [dbo].[variation_option] CHECK CONSTRAINT [FK_variation_option_variation]
+GO
