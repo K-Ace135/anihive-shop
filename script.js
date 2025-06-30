@@ -509,61 +509,60 @@ document.addEventListener('DOMContentLoaded', hideMenuIfButtonHidden);
   const dropdown = document.getElementById('categories-dropdown');
   if (!dropdownBtn || !dropdownContent || !dropdown) return;
 
-  // Only allow keyboard open (Enter/Down/Space), not click
-  dropdownBtn.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      dropdownContent.style.display = 'flex';
-      dropdownBtn.setAttribute('aria-expanded', 'true');
-      // Focus first item
-      const firstItem = dropdownContent.querySelector('.dropdown-sub');
-      if (firstItem) firstItem.focus();
-    }
+  // Remove click event for dropdownBtn if any
+  dropdownBtn.onclick = null;
+  dropdownBtn.addEventListener('click', function(e) {
+    e.preventDefault(); // Prevent click from toggling dropdown
+    return false;
   });
 
-  // Keyboard: close dropdown on Escape
-  dropdownContent.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      dropdownContent.style.display = 'none';
-      dropdownBtn.setAttribute('aria-expanded', 'false');
-      dropdownBtn.focus();
-    }
-    // Arrow navigation
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      let next = document.activeElement.nextElementSibling;
-      while (next && !next.classList.contains('dropdown-sub')) next = next.nextElementSibling;
-      if (next) next.focus();
-    }
-    if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      let prev = document.activeElement.previousElementSibling;
-      while (prev && !prev.classList.contains('dropdown-sub')) prev = prev.previousElementSibling;
-      if (prev) prev.focus();
-    }
-  });
-
-  // Mouse: close dropdown when tabbing out
-  dropdownContent.addEventListener('focusout', function(e) {
-    setTimeout(() => {
-      if (!dropdown.contains(document.activeElement)) {
-        dropdownContent.style.display = '';
-        dropdownBtn.setAttribute('aria-expanded', 'false');
-      }
-    }, 0);
-  });
-
-  // Mouse: open/close handled by CSS :hover/:focus-within
-  // Ensure aria-expanded is correct
+  // Show dropdown on hover only
   dropdown.addEventListener('mouseenter', function() {
+    dropdownContent.style.display = 'flex';
     dropdownBtn.setAttribute('aria-expanded', 'true');
   });
   dropdown.addEventListener('mouseleave', function() {
+    dropdownContent.style.display = 'none';
     dropdownBtn.setAttribute('aria-expanded', 'false');
-    // Hide dropdownContent if it was shown by keyboard
-    dropdownContent.style.display = '';
   });
 })();
+
+// --- Search By Title Dropdown: Only open on hover, not click ---
+  const titlesDropdownBtn = document.getElementById('titlesDropdownBtn');
+  const titlesDropdownContent = document.getElementById('titlesDropdownContent');
+  const titlesDropdown = document.getElementById('titles-dropdown');
+  if (titlesDropdownBtn && titlesDropdownContent && titlesDropdown) {
+    titlesDropdownBtn.onclick = null;
+    titlesDropdownBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      return false;
+    });
+    titlesDropdown.addEventListener('mouseenter', function() {
+      titlesDropdownContent.style.display = 'flex';
+      titlesDropdownBtn.setAttribute('aria-expanded', 'true');
+    });
+    titlesDropdown.addEventListener('mouseleave', function() {
+      titlesDropdownContent.style.display = 'none';
+      titlesDropdownBtn.setAttribute('aria-expanded', 'false');
+    });
+    // Keyboard accessibility (optional, similar to categories)
+    titlesDropdownBtn.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        titlesDropdownContent.style.display = 'flex';
+        titlesDropdownBtn.setAttribute('aria-expanded', 'true');
+        const firstItem = titlesDropdownContent.querySelector('a');
+        if (firstItem) firstItem.focus();
+      }
+    });
+    titlesDropdownContent.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        titlesDropdownContent.style.display = 'none';
+        titlesDropdownBtn.setAttribute('aria-expanded', 'false');
+        titlesDropdownBtn.focus();
+      }
+    });
+  }
 
 // --- Scroll-to-top button logic ---
 (function() {
@@ -619,7 +618,9 @@ function setupCarousel(carouselId, dotsId, interval = 3500, showDots = true) {
   const dots = (showDots && dotsId) ? document.getElementById(dotsId) : null;
   let current = 0;
   function show(idx) {
-    items.forEach((img, i) => img.classList.toggle('active', i === idx));
+    current = idx;
+    // Move the track for sliding effect
+    track.style.transform = `translateX(-${idx * 100}%)`;
     if (dots) {
       Array.from(dots.children).forEach((dot, i) => dot.classList.toggle('active', i === idx));
     }
@@ -642,6 +643,8 @@ function setupCarousel(carouselId, dotsId, interval = 3500, showDots = true) {
     const dotsElem = document.getElementById(dotsId);
     if (dotsElem) dotsElem.style.display = 'none';
   }
+  // Set initial width for all items (for main carousel)
+  items.forEach(item => { item.style.minWidth = '100%'; });
   show(current);
   setInterval(next, interval);
 }

@@ -6,8 +6,8 @@
   <title>AniHive</title>
 
   <link rel="stylesheet" href="style.css" />
-  
-
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
   <!-- Accessible Menu Overlay (move outside header, just after <body>) -->
@@ -33,11 +33,52 @@
     </div>
     <div class="logo-search">
       <select class="header-category-select">
-        <option value="all">All</option>
-        <option value="figures">Figures</option>
-        <option value="accessories">Accessories</option>
-        <option value="posters">Posters</option>
-        <option value="apparel">Apparel</option>
+<option value="All Categories" selected>All Categories</option>
+        <option value="Premium Bandai">Premium Bandai</option>
+<option value="BANDAI Candytoys">BANDAI Candytoys</option>
+<option value="T-Shirts">T-Shirts</option>
+<option value="Hoodies">Hoodies</option>
+<option value="Cosplay Costumes">Cosplay Costumes</option>
+<option value="Notebooks">Notebooks</option>
+<option value="Stickers">Stickers</option>
+<option value="Posters">Posters</option>
+<option value="Wall Scrolls">Wall Scrolls</option>
+<option value="Keychains">Keychains</option>
+<option value="Plushies">Plushies</option>
+<option value="Blu-Ray/DVD">Blu-Ray/DVD</option>
+<option value="Points Rewards">Points Rewards</option>
+<option value="Banpresto">Banpresto</option>
+<option value="Nendoroid">Nendoroid</option>
+<option value="Figma">Figma</option>
+<option value="Scale">Scale</option>
+<option value="Others (Figure)">Others (Figure)</option>
+<option value="Seiyuu/Artist CD">Seiyuu/Artist CD</option>
+<option value="Character Song CD">Character Song CD</option>
+<option value="Theme Song CD">Theme Song CD</option>
+<option value="Drama CD">Drama CD</option>
+<option value="Soundtrack">Soundtrack</option>
+<option value="Japanese Magazine">Japanese Magazine</option>
+<option value="Japanese Book">Japanese Book</option>
+<option value="Japanese Comic">Japanese Comic</option>
+<option value="Thai Illustration Book">Thai Illustration Book</option>
+<option value="Thai Comic">Thai Comic</option>
+<option value="Gachapon">Gachapon</option>
+<option value="Trading Card">Trading Card</option>
+<option value="With Bonus">With Bonus</option>
+<option value="Kuji">Kuji</option>
+<option value="Live Concert Goods">Live Concert Goods</option>
+<option value="Limited Edition Albums">Limited Edition Albums</option>
+<option value="Lightsticks">Lightsticks</option>
+<option value="Fan Club Exclusives">Fan Club Exclusives</option>
+<option value="Wallpapers">Wallpapers</option>
+<option value="VTuber Assets">VTuber Assets</option>
+<option value="New Year Lucky Bags">New Year Lucky Bags</option>
+<option value="Summer Festival Specials">Summer Festival Specials</option>
+<option value="Halloween & Christmas Editions">Halloween & Christmas Editions</option>
+<option value="Seiyuu Interviews">Seiyuu Interviews</option>
+<option value="Behind-the-Scenes">Behind-the-Scenes</option>
+<option value="Japanese Language Books">Japanese Language Books</option>
+
       </select>
       <input type="text" class="header-search-input" placeholder="Search products...">
       <button class="search-button">Search</button>
@@ -45,17 +86,11 @@
     <div class="header-icons">
       <button class="accessible-menu-button" id="menu-btn" aria-label="Open menu" aria-controls="accessible-menu" aria-expanded="false">☰</button>
       <button class="search-menu-button" id="search-menu-btn" aria-label="Open search" style="display:none;">🔍</button>
-      <a href="wishlist.html" title="Wishlist">❤️</a>
+      <a href="wishlist.html" title="Wishlist"><i class="fa-regular fa-heart"></i></a>
       <div class="cart-wrapper" id="cart-wrapper" style="position:relative;display:inline-block;">
         <button id="cartIconBtn" onclick="openCartModal()" style="background:none;border:none;outline:none;cursor:pointer;position:relative;display:flex;align-items:center;gap:0.5em;" aria-label="View cart" disabled>
   <span style="font-size:1.5em;position:relative;display:inline-block;line-height:1;">
-    <!-- SVG Cart Icon Start -->
-    <svg class="cart-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 28 28">
-  <circle cx="10" cy="24" r="2" fill="#111"/>
-  <circle cx="20" cy="24" r="2" fill="#111"/>
-  <path d="M4 6h2.5l2.7 12.1A2 2 0 0 0 11.1 20h7.8a2 2 0 0 0 1.9-1.5L22.7 10H7" stroke="#111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-</svg>
-    <!-- SVG Cart Icon End -->
+    <i class="fa-solid fa-cart-shopping"></i>
     <span id="cart-badge" style="display:none;position:absolute;top:-7px;right:-8px;background:#ef4444;color:#fff;font-size:0.7em;font-weight:bold;padding:1px 5px;border-radius:999px;min-width:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08);z-index:2;">0</span>
   </span>
   <span id="cart-total" style="font-weight:bold;color:#000000;font-size:1.1em;">฿0</span>
@@ -116,33 +151,105 @@
       <button class="dropdown-btn" id="titlesDropdownBtn" aria-haspopup="true" aria-expanded="false" tabindex="0">Search By Title</button>
       <div class="dropdown-content" id="titlesDropdownContent" role="menu" aria-label="Titles" style="min-width:260px;max-height:400px;overflow-y:auto;">
         <div class="dropdown-col">
-          <a class="dropdown-main" href="products.html?title=Ado">Ado</a>
-          <a class="dropdown-main" href="products.html?title=ALIEN%20STAGE">ALIEN STAGE</a>
-          <a class="dropdown-main" href="products.html?title=Animate_IMA">Animate_IMA</a>
-          <a class="dropdown-main" href="products.html?title=Attack%20On%20Titan">Attack On Titan</a>
-          <a class="dropdown-main" href="products.html?title=BL">BL</a>
-          <a class="dropdown-main" href="products.html?title=Blue%20Archive">Blue Archive</a>
-          <a class="dropdown-main" href="products.html?title=Blue%20Lock">Blue Lock</a>
-          <a class="dropdown-main" href="products.html?title=Bungo%20Stray%20Dogs">Bungo Stray Dogs</a>
-          <a class="dropdown-main" href="products.html?title=Genshin%20Impact">Genshin Impact</a>
-          <a class="dropdown-main" href="products.html?title=Given">Given</a>
-          <a class="dropdown-main" href="products.html?title=Haikyu!!">Haikyu!!</a>
-          <a class="dropdown-main" href="products.html?title=Hololive%20Production">Hololive Production</a>
-          <a class="dropdown-main" href="products.html?title=Honkai%20Star%20Rail">Honkai Star Rail</a>
-          <a class="dropdown-main" href="products.html?title=Hoshimachi%20Suisei">Hoshimachi Suisei</a>
-          <a class="dropdown-main" href="products.html?title=Jujutsu%20Kaisen">Jujutsu Kaisen</a>
-          <a class="dropdown-main" href="products.html?title=Kimetsu%20No%20Yaiba">Kimetsu No Yaiba</a>
-          <a class="dropdown-main" href="products.html?title=My%20Hero%20Academia">My Hero Academia</a>
-          <a class="dropdown-main" href="products.html?title=NON%20CHARACTER">NON CHARACTER</a>
-          <a class="dropdown-main" href="products.html?title=Project%20Sekai%3A%20Colorful%20Stage%20Feat.%20Hatsune%20Miku">Project Sekai: Colorful Stage Feat. Hatsune Miku</a>
-          <a class="dropdown-main" href="products.html?title=SAKAMOTO%20DAYS">SAKAMOTO DAYS</a>
-          <a class="dropdown-main" href="products.html?title=Sword%20Art%20Online">Sword Art Online</a>
-          <a class="dropdown-main" href="products.html?title=Tian%20Guan%20Ci%20Fu">Tian Guan Ci Fu</a>
-          <a class="dropdown-main" href="products.html?title=Violet%20Evergarden">Violet Evergarden</a>
-          <a class="dropdown-main" href="products.html?title=Vtuber">Vtuber</a>
-          <a class="dropdown-main" href="products.html?title=Vocaloid">Vocaloid</a>
-          <a class="dropdown-main" href="products.html?title=YOASOBI">YOASOBI</a>
-          <a class="dropdown-main" href="products.html?title=Zenless%20Zone%20Zero">Zenless Zone Zero</a>
+          <a class="dropdown-main" href="products.html?title=86 (Eighty-Six)">86 (Eighty-Six)</a>
+<a class="dropdown-main" href="products.html?title=ALIEN STAGE">ALIEN STAGE</a>
+<a class="dropdown-main" href="products.html?title=Akudama Drive">Akudama Drive</a>
+<a class="dropdown-main" href="products.html?title=Ado">Ado</a>
+<a class="dropdown-main" href="products.html?title=Aimer">Aimer</a>
+<a class="dropdown-main" href="products.html?title=Amane Kanata">Amane Kanata</a>
+<a class="dropdown-main" href="products.html?title=Animate_IMA">Animate_IMA</a>
+<a class="dropdown-main" href="products.html?title=Attack On Titan">Attack On Titan</a>
+<a class="dropdown-main" href="products.html?title=BAUBAU">BAUBAU</a>
+<a class="dropdown-main" href="products.html?title=Blue Archive">Blue Archive</a>
+<a class="dropdown-main" href="products.html?title=Blue Lock">Blue Lock</a>
+<a class="dropdown-main" href="products.html?title=Bocchi the Rock!">Bocchi the Rock!</a>
+<a class="dropdown-main" href="products.html?title=Buddy Daddies">Buddy Daddies</a>
+<a class="dropdown-main" href="products.html?title=Bungo Stray Dogs">Bungo Stray Dogs</a>
+<a class="dropdown-main" href="products.html?title=Call of the Night">Call of the Night</a>
+<a class="dropdown-main" href="products.html?title=Chainsaw Man">Chainsaw Man</a>
+<a class="dropdown-main" href="products.html?title=Dandadan">Dandadan</a>
+<a class="dropdown-main" href="products.html?title=Dead Dead Demon’s Dededede Destruction">Dead Dead Demon’s Dededede Destruction</a>
+<a class="dropdown-main" href="products.html?title=Delicious in Dungeon">Delicious in Dungeon</a>
+<a class="dropdown-main" href="products.html?title=Dr. Stone: Science Future">Dr. Stone: Science Future</a>
+<a class="dropdown-main" href="products.html?title=Erased">Erased</a>
+<a class="dropdown-main" href="products.html?title=Eve">Eve</a>
+<a class="dropdown-main" href="products.html?title=Filian">Filian</a>
+<a class="dropdown-main" href="products.html?title=Fire Force">Fire Force</a>
+<a class="dropdown-main" href="products.html?title=Frieren: Beyond Journey’s End">Frieren: Beyond Journey’s End</a>
+<a class="dropdown-main" href="products.html?title=Gawr Gura">Gawr Gura</a>
+<a class="dropdown-main" href="products.html?title=Haikyu!!">Haikyu!!</a>
+<a class="dropdown-main" href="products.html?title=Hakos Baelz">Hakos Baelz</a>
+<a class="dropdown-main" href="products.html?title=Hell’s Paradise">Hell’s Paradise</a>
+<a class="dropdown-main" href="products.html?title=Hiiragi Tsurugi">Hiiragi Tsurugi</a>
+<a class="dropdown-main" href="products.html?title=Honkai Star Rail">Honkai Star Rail</a>
+<a class="dropdown-main" href="products.html?title=Hoshimachi Suisei">Hoshimachi Suisei</a>
+<a class="dropdown-main" href="products.html?title=Houshou Marine">Houshou Marine</a>
+<a class="dropdown-main" href="products.html?title=Hiroyuki Sawano">Hiroyuki Sawano</a>
+<a class="dropdown-main" href="products.html?title=Hyakumantenbara Salome">Hyakumantenbara Salome</a>
+<a class="dropdown-main" href="products.html?title=In the Heart of Kunoichi Tsubaki">In the Heart of Kunoichi Tsubaki</a>
+<a class="dropdown-main" href="products.html?title=Ironmouse">Ironmouse</a>
+<a class="dropdown-main" href="products.html?title=Iroha Kazama">Iroha Kazama</a>
+<a class="dropdown-main" href="products.html?title=IRyS">IRyS</a>
+<a class="dropdown-main" href="products.html?title=Jobless Reincarnation">Jobless Reincarnation</a>
+<a class="dropdown-main" href="products.html?title=Jujutsu Kaisen">Jujutsu Kaisen</a>
+<a class="dropdown-main" href="products.html?title=Kaela Kovalskia">Kaela Kovalskia</a>
+<a class="dropdown-main" href="products.html?title=Kaiju No. 8">Kaiju No. 8</a>
+<a class="dropdown-main" href="products.html?title=Kanae">Kanae</a>
+<a class="dropdown-main" href="products.html?title=Kimetsu No Yaiba">Kimetsu No Yaiba</a>
+<a class="dropdown-main" href="products.html?title=King Gnu">King Gnu</a>
+<a class="dropdown-main" href="products.html?title=Kizuna AI">Kizuna AI</a>
+<a class="dropdown-main" href="products.html?title=Kobo Kanaeru">Kobo Kanaeru</a>
+<a class="dropdown-main" href="products.html?title=Kson">Kson</a>
+<a class="dropdown-main" href="products.html?title=Kuroshitsuji: Midori no Majo-hen">Kuroshitsuji: Midori no Majo-hen</a>
+<a class="dropdown-main" href="products.html?title=Kuzuha">Kuzuha</a>
+<a class="dropdown-main" href="products.html?title=Laplus Darknesss">Laplus Darknesss</a>
+<a class="dropdown-main" href="products.html?title=LiSA">LiSA</a>
+<a class="dropdown-main" href="products.html?title=Lightsticks">Lightsticks</a>
+<a class="dropdown-main" href="products.html?title=Lu Takane">Lui Takane</a>
+<a class="dropdown-main" href="products.html?title=Lycoris Recoil">Lycoris Recoil</a>
+<a class="dropdown-main" href="products.html?title=Mashle: Magic and Muscles">Mashle: Magic and Muscles</a>
+<a class="dropdown-main" href="products.html?title=Medalist">Medalist</a>
+<a class="dropdown-main" href="products.html?title=Miko (Sakura Miko)">Miko (Sakura Miko)</a>
+<a class="dropdown-main" href="products.html?title=Mob Psycho 100">Mob Psycho 100</a>
+<a class="dropdown-main" href="products.html?title=My Hero Academia">My Hero Academia</a>
+<a class="dropdown-main" href="products.html?title=NIJISANJI EN">NIJISANJI EN</a>
+<a class="dropdown-main" href="products.html?title=Oshi no Ko">Oshi no Ko</a>
+<a class="dropdown-main" href="products.html?title=Ouro Kronii">Ouro Kronii</a>
+<a class="dropdown-main" href="products.html?title=Parasyte: The Grey">Parasyte: The Grey</a>
+<a class="dropdown-main" href="products.html?title=Pekora (Usada Pekora)">Pekora (Usada Pekora)</a>
+<a class="dropdown-main" href="products.html?title=Project Sekai Colorful Stage Feat. Hatsune Miku">Project Sekai Colorful Stage Feat. Hatsune Miku</a>
+<a class="dropdown-main" href="products.html?title=RADWIMPS">RADWIMPS</a>
+<a class="dropdown-main" href="products.html?title=Re:Zero">Re:Zero</a>
+<a class="dropdown-main" href="products.html?title=ReoNa">ReoNa</a>
+<a class="dropdown-main" href="products.html?title=SAKAMOTO DAYS">SAKAMOTO DAYS</a>
+<a class="dropdown-main" href="products.html?title=Shoto">Shoto</a>
+<a class="dropdown-main" href="products.html?title=Shiranami Ramune">Shiranami Ramune</a>
+<a class="dropdown-main" href="products.html?title=Shylily">Shylily</a>
+<a class="dropdown-main" href="products.html?title=SK8 the Infinity">SK8 the Infinity</a>
+<a class="dropdown-main" href="products.html?title=Solo Leveling">Solo Leveling</a>
+<a class="dropdown-main" href="products.html?title=Spy × Family">Spy × Family</a>
+<a class="dropdown-main" href="products.html?title=Sword Art Online">Sword Art Online</a>
+<a class="dropdown-main" href="products.html?title=That Time I Got Reincarnated as a Slime">That Time I Got Reincarnated as a Slime</a>
+<a class="dropdown-main" href="products.html?title=The Angel Next Door Spoils Me Rotten">The Angel Next Door Spoils Me Rotten</a>
+<a class="dropdown-main" href="products.html?title=The Apothecary Diaries">The Apothecary Diaries</a>
+<a class="dropdown-main" href="products.html?title=The Dangers in My Heart">The Dangers in My Heart</a>
+<a class="dropdown-main" href="products.html?title=The Great Pretender">The Great Pretender</a>
+<a class="dropdown-main" href="products.html?title=Tiang Guan Ci Fu">Tian Guan Ci Fu</a>
+<a class="dropdown-main" href="products.html?title=To Your Eternity">To Your Eternity</a>
+<a class="dropdown-main" href="products.html?title=Tokyo Revengers">Tokyo Revengers</a>
+<a class="dropdown-main" href="products.html?title=Tsukino Mito">Tsukino Mito</a>
+<a class="dropdown-main" href="products.html?title=Uma Musume: Cinderella Gray">Uma Musume: Cinderella Gray</a>
+<a class="dropdown-main" href="products.html?title=Violet Evergarden">Violet Evergarden</a>
+<a class="dropdown-main" href="products.html?title=Vocaloid">Vocaloid</a>
+<a class="dropdown-main" href="products.html?title=VShojo">VShojo</a>
+<a class="dropdown-main" href="products.html?title=Wind Breaker">Wind Breaker</a>
+<a class="dropdown-main" href="products.html?title=YOASOBI">YOASOBI</a>
+<a class="dropdown-main" href="products.html?title=Yorushika">Yorushika</a>
+<a class="dropdown-main" href="products.html?title=Zenless Zone Zero">Zenless Zone Zero</a>
+<a class="dropdown-main" href="products.html?title=Zentreya">Zentreya</a>
+<a class="dropdown-main" href="products.html?title=ZilverK">ZilverK</a>
+<a class="dropdown-main" href="products.html?title=ZUTOMAYO">ZUTOMAYO</a>
+
         </div>
       </div>
     </div>
@@ -158,16 +265,16 @@
       </button>
       <div class="collapsible-content open" id="popular-content">
         <ul id="popular-list">
-          <li data-title="Jujutsu Kaisen"><img src="https://cdn.myanimelist.net/images/anime/1804/126216.jpg"><span>Jujutsu Kaisen</span></li>
-          <li data-title="Blue Lock"><img src="https://cdn.myanimelist.net/images/anime/1015/127974.jpg"><span>Blue Lock</span></li>
-          <li data-title="Haikyu!!"><img src="https://cdn.myanimelist.net/images/anime/7/76014.jpg"><span>Haikyu!!</span></li>
-          <li data-title="Wind Breaker"><img src="https://cdn.myanimelist.net/images/anime/1972/139503.jpg"><span>Wind Breaker</span></li>
-          <li data-title="My Hero Academia"><img src="https://cdn.myanimelist.net/images/anime/10/78745.jpg"><span>My Hero Academia</span></li>
-          <li data-title="Bungo Stray Dogs"><img src="https://cdn.myanimelist.net/images/anime/3/75178.jpg"><span>Bungo Stray Dogs</span></li>
-          <li data-title="Kimetsu no Yaiba"><img src="https://cdn.myanimelist.net/images/anime/1286/99889.jpg"><span>Kimetsu no Yaiba</span></li>
-          <li data-title="Tian Guan Ci Fu"><img src="https://cdn.myanimelist.net/images/anime/1813/109223.jpg"><span>Tian Guan Ci Fu</span></li>
-          <li data-title="Honkai Star Rail"><img src="https://cdn.myanimelist.net/images/anime/1988/139504.jpg"><span>Honkai Star Rail</span></li>
-          <li data-title="Genshin Impact"><img src="https://cdn.myanimelist.net/images/anime/1987/139505.jpg"><span>Genshin Impact</span></li>
+          <li data-title="Jujutsu Kaisen"><img src="images/popular-titles/jujutsu-kaisen.jpg"><span>Jujutsu Kaisen</span></li>
+          <li data-title="Blue Lock"><img src="images/popular-titles/blue_lock.jpg"><span>Blue Lock</span></li>
+          <li data-title="Haikyu!!"><img src="images/popular-titles/haikyuu.jpg"><span>Haikyu!!</span></li>
+          <li data-title="Wind Breaker"><img src="images/popular-titles/wind_breaker.jpg"><span>Wind Breaker</span></li>
+          <li data-title="My Hero Academia"><img src="images/popular-titles/my_hero_academia.jpg"><span>My Hero Academia</span></li>
+          <li data-title="Bungo Stray Dogs"><img src="images/popular-titles/bungo_stray_dogs.jpg"><span>Bungo Stray Dogs</span></li>
+          <li data-title="Kimetsu no Yaiba"><img src="images/popular-titles/kimetsu_no_yaiba.jpg"><span>Kimetsu no Yaiba</span></li>
+          <li data-title="Tian Guan Ci Fu"><img src="images/popular-titles/tian_guan_cifu.jpg"><span>Tian Guan Ci Fu</span></li>
+          <li data-title="Honkai Star Rail"><img src="images/popular-titles/honkai_star_rail.jpg"><span>Honkai Star Rail</span></li>
+          <li data-title="Genshin Impact"><img src="images/popular-titles/genshin_impact.jpg"><span>Genshin Impact</span></li>
         </ul>
       </div>
       <div class="related-products" id="related-products"></div>
@@ -177,11 +284,11 @@
       <!-- Sliding Promo Banner Start -->
       <div class="main-carousel" id="main-carousel">
         <div class="carousel-track">
-          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Banner 1" class="carousel-item active">
-          <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80" alt="Banner 2" class="carousel-item">
-          <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80" alt="Banner 3" class="carousel-item">
-          <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80" alt="Banner 4" class="carousel-item">
-          <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=800&q=80" alt="Banner 5" class="carousel-item">
+          <img src="images/carousel/alienstage.jpg" alt="Banner 1" class="carousel-item">
+          <img src="images/carousel/spyxfamily.jpeg" alt="Banner 2" class="carousel-item">
+          <img src="images/carousel/yuji-poster.webp" alt="Banner 3" class="carousel-item">
+          <img src="images/carousel/ado-poster.webp" alt="Banner 4" class="carousel-item">
+          <img src="images/carousel/genshin-impact-poster.jpg" alt="Banner 5" class="carousel-item">
         </div>
         <div class="carousel-dots" id="carousel-dots"></div>
       </div>
@@ -191,17 +298,17 @@
       <div class="side-by-side-banners">
         <div class="main-carousel small-carousel" id="main-carousel-2">
           <div class="carousel-track" id="carousel-track-2">
-            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Banner 1" class="carousel-item">
-            <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80" alt="Banner 2" class="carousel-item">
-            <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80" alt="Banner 3" class="carousel-item">
+            <img src="images/carousel/demonslayer-small.jpeg" alt="Banner 1" class="carousel-item">
+            <img src="images/carousel/genshin-small.jpg" alt="Banner 2" class="carousel-item">
+            <img src="images/carousel/jjk-small.jpg" alt="Banner 3" class="carousel-item">
           </div>
           <div class="carousel-dots" id="carousel-dots-2"></div>
         </div>
         <div class="main-carousel small-carousel" id="main-carousel-3">
           <div class="carousel-track" id="carousel-track-3">
-            <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80" alt="Banner 4" class="carousel-item">
-            <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=800&q=80" alt="Banner 5" class="carousel-item">
-            <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80" alt="Banner 6" class="carousel-item">
+            <img src="images/carousel/spyfamily-small-kuji.jpg" alt="Banner 4" class="carousel-item">
+            <img src="images/carousel/zoro-small-kuji.jpg" alt="Banner 5" class="carousel-item">
+            <img src="images/carousel/onepiece-kuji.jpg" alt="Banner 6" class="carousel-item">
           </div>
           <div class="carousel-dots" id="carousel-dots-3"></div>
         </div>
@@ -222,8 +329,8 @@
       <div class="modal-desc" id="modal-desc"></div>
       <div class="modal-price" id="modal-price"></div>
       <div class="modal-actions">
-        <button class="wishlist-btn" id="modal-wishlist" title="Add to wishlist">❤️</button>
-        <button class="cart-btn" id="modal-cart" title="Add to cart">🛒</button>
+        <button class="wishlist-btn" id="modal-wishlist" title="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
+        <button class="cart-btn" id="modal-cart" title="Add to cart"><i class="fa-solid fa-cart-shopping"></i></button>
       </div>
     </div>
   </div>
@@ -379,5 +486,31 @@ document.getElementById('cartModal').addEventListener('click', function(e) {
 <button id="scrollToTopBtn" aria-label="Scroll to top" style="opacity:0;pointer-events:none;position:fixed;bottom:32px;right:32px;z-index:2000;background:rgba(255,223,120,0.55);box-shadow:0 8px 32px 0 rgba(230,167,62,0.18);backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);border:none;border-radius:50%;width:48px;height:48px;font-size:2em;color:#e67e22;cursor:pointer;transition:opacity 0.2s;display:block;align-items:center;justify-content:center;display:flex;">
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
 </button>
+<script src="header-category-anim.js"></script>
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3>AniHive</h3>
+      <p>Your one-stop shop for anime figures, accessories, and more!</p>
+    </div>
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h4>Follow Us</h4>
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">&copy; 2025 AniHive. All rights reserved.</div>
+</footer>
 </body>
 </html>
